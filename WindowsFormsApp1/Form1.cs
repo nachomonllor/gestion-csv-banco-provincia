@@ -16,7 +16,7 @@ namespace WindowsFormsApp1
 
         string ruta = "C:\\Users\\nacho\\OneDrive\\Desktop\\Banco provincia csv meses\\unidos.csv";
         static List<List<string>> datos = new List<List<string>>();
-        static List<Tuple<string, string, double, double>> listaDatos = new List<Tuple<string, string, double, double>>();
+        static List<Tuple<DateTime, string, double, double>> listaDatos = new List<Tuple<DateTime, string, double, double>>();
 
         public Form1()
         {
@@ -30,7 +30,7 @@ namespace WindowsFormsApp1
         public void ResetDataGrid()
         {
             dataGridView1.Rows.Clear();
-            listaDatos = new List<Tuple<string, string, double, double>>();
+            listaDatos = new List<Tuple<DateTime, string, double, double>>();
             CargarListaDatos();
             CargarDataGridView();
         }
@@ -101,6 +101,38 @@ namespace WindowsFormsApp1
             return true;
         }
 
+        DateTime ParsearFecha(string fecha)
+        {
+
+            string[] meses = { "ene", "feb", "mar", "abr", "may" , "jun", "jul", "ago", "sep", "oct", "nov", "dic" };
+
+
+            string[] arr = fecha.Split('-');
+
+            if (arr.Length < 3) return DateTime.MinValue;
+
+            int dia = int.Parse(arr[0]);
+
+            string mes_str = arr[1];
+            int mes= 0;
+
+
+            for(int i = 0; i<meses.Length; i++)
+            {
+                if (meses[i] == mes_str.ToLower())
+                {
+                    mes = i+1;
+                    break; 
+                }
+            }
+
+            int an = int.Parse(arr[2]);
+
+
+            return new DateTime(an, mes, dia);
+
+        } 
+
         void CargarListaDatos()
         {
             foreach (List<string> fila in datos)
@@ -122,9 +154,11 @@ namespace WindowsFormsApp1
                     saldo_double = double.Parse(saldo);
                 }
 
+                DateTime FechaDateTime = ParsearFecha(fecha);
+
                 if (fecha.Length > 0 && descripcion.Length > 0 && importe_double > 0)
                 {
-                    listaDatos.Add(new Tuple<string, string, double, double>(fecha, descripcion, importe_double, saldo_double));
+                    listaDatos.Add(new Tuple<DateTime, string, double, double>(FechaDateTime, descripcion, importe_double, saldo_double));
                 }
             }
         }
@@ -150,11 +184,13 @@ namespace WindowsFormsApp1
                     saldo_double = double.Parse(saldo);
                 }
 
+                DateTime FechaDateTime = ParsearFecha(fecha);
+
                 if (fecha.Length > 0 && descripcion.Length > 0 && importe_double > 0)
                 {
                     if (descripcion.Contains(contiene))
                     {
-                        listaDatos.Add(new Tuple<string, string, double, double>(fecha, descripcion, importe_double, saldo_double));
+                        listaDatos.Add(new Tuple<DateTime, string, double, double>(FechaDateTime, descripcion, importe_double, saldo_double));
                     }
                 }
             }
@@ -163,7 +199,7 @@ namespace WindowsFormsApp1
         void CargarDataGridView()
         {
 
-            foreach (Tuple<string, string, double, double> tuple in listaDatos)
+            foreach (Tuple<DateTime, string, double, double> tuple in listaDatos)
             {
                 dataGridView1.Rows.Add(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
             }
@@ -176,7 +212,7 @@ namespace WindowsFormsApp1
         {
             double sumatoriaMercado = 0.0;
 
-            foreach (Tuple<string, string, double, double> tuple in listaDatos)
+            foreach (Tuple<DateTime, string, double, double> tuple in listaDatos)
             {
                 if (tuple.Item2.Contains(contiene))
                 {
@@ -205,7 +241,7 @@ namespace WindowsFormsApp1
         {
             
 
-            listaDatos = new List<Tuple<string, string, double, double>>();
+            listaDatos = new List<Tuple<DateTime, string, double, double>>();
             CargarListaDatos();
             BuscarImporte(txt_contiene.Text);
 
@@ -216,7 +252,7 @@ namespace WindowsFormsApp1
            
             dataGridView1.Rows.Clear(); 
 
-            listaDatos = new List<Tuple<string, string, double, double>>();
+            listaDatos = new List<Tuple<DateTime, string, double, double>>();
             CargarListaDatos(txt_contiene.Text);
             CargarDataGridView();
 

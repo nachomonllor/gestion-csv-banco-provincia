@@ -9,3 +9,14 @@ C:\Users\nacho\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsF
 C:\Users\nacho\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\nacho\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\nacho\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.SuggestedBindingRedirects.cache
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\nacho\OneDrive\Desktop\gestion-csv-banco-provincia\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
