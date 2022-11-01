@@ -150,7 +150,6 @@ namespace WindowsFormsApp1
                     saldo_double = double.Parse(saldo);
                 }
 
-                //dataGridView1.Rows.Add(fecha, descripcion, importe_double, saldo_double);
                 if (fecha.Length > 0 && descripcion.Length > 0 && importe_double > 0)
                 {
                     if (descripcion.Contains(contiene))
