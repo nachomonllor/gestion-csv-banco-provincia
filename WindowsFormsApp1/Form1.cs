@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,7 +16,8 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
 
-        string ruta = "C:\\Users\\nacho\\OneDrive\\Desktop\\Banco provincia csv meses\\unidos.csv";
+        //string ruta = "C:\\Users\\nacho\\OneDrive\\Desktop\\Banco provincia csv meses\\unidos.csv";
+        string ruta;
         static List<List<string>> datos = new List<List<string>>();
         static List<Tuple<DateTime, string, double, double>> listaDatos = new List<Tuple<DateTime, string, double, double>>();
 
@@ -22,9 +25,28 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
-            datos = ObtenerDatos(ruta);
-            CargarListaDatos();
-            CargarDataGridView();
+
+
+            openFileDialog1 = new OpenFileDialog()
+            {
+                FileName = "Select a CSV file",
+                Filter = "Csv files (*.csv)|*.CSV",
+                Title = "Open .csv file"
+            };
+
+            //datos = ObtenerDatos(ruta);
+            //CargarListaDatos();
+            //CargarDataGridView();
+
+
+            //selectButton = new Button()
+            //{
+            //    Size = new Size(100, 20),
+            //    Location = new Point(15, 15),
+            //    Text = "Select file"
+            //};
+            //selectButton.Click += new EventHandler(selectButton_Click);
+            //Controls.Add(selectButton);
         }
 
         public void ResetDataGrid()
@@ -231,6 +253,8 @@ namespace WindowsFormsApp1
 
         }
 
+
+
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -261,6 +285,36 @@ namespace WindowsFormsApp1
         private void btn_reset_datagrid_Click(object sender, EventArgs e)
         {
             ResetDataGrid();
+        }
+
+        private void btnSeleccionarArchivo_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    var filePath = openFileDialog1.FileName;
+                    using (Stream str = openFileDialog1.OpenFile())
+                    {
+                        // Process.Start("notepad.exe", filePath);
+                        ruta = filePath;
+
+                        datos = ObtenerDatos(ruta);
+                        ResetDataGrid();
+     
+                    }
+                }
+                catch (SecurityException ex)
+                {
+                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                    $"Details:\n\n{ex.StackTrace}");
+                }
+            }
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
