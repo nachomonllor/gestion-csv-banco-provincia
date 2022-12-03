@@ -47,6 +47,13 @@ namespace WindowsFormsApp1
             //};
             //selectButton.Click += new EventHandler(selectButton_Click);
             //Controls.Add(selectButton);
+
+            txt_inicio.Enabled = false;
+            txt_fin.Enabled = false;
+            radioButton1.Checked = true;
+            radioButton2.Checked = false;
+
+
         }
 
         public void ResetDataGrid()
@@ -100,7 +107,7 @@ namespace WindowsFormsApp1
 
             List<List<string>> datos = new List<List<string>>();
 
-            for(int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
                 string[] fila = SmartSplit(lines[i]);
                 datos.Add(fila.ToList());
@@ -110,7 +117,7 @@ namespace WindowsFormsApp1
             return datos;
         }
 
-        public static bool IsNumeric( string s)
+        public static bool IsNumeric(string s)
         {
             foreach (char c in s)
             {
@@ -126,7 +133,7 @@ namespace WindowsFormsApp1
         DateTime ParsearFecha(string fecha)
         {
 
-            string[] meses = { "ene", "feb", "mar", "abr", "may" , "jun", "jul", "ago", "sep", "oct", "nov", "dic" };
+            string[] meses = { "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" };
 
 
             string[] arr = fecha.Split('-');
@@ -136,15 +143,15 @@ namespace WindowsFormsApp1
             int dia = int.Parse(arr[0]);
 
             string mes_str = arr[1];
-            int mes= 0;
+            int mes = 0;
 
 
-            for(int i = 0; i<meses.Length; i++)
+            for (int i = 0; i<meses.Length; i++)
             {
                 if (meses[i] == mes_str.ToLower())
                 {
                     mes = i+1;
-                    break; 
+                    break;
                 }
             }
 
@@ -153,7 +160,7 @@ namespace WindowsFormsApp1
 
             return new DateTime(an, mes, dia);
 
-        } 
+        }
 
         void CargarListaDatos()
         {
@@ -251,6 +258,8 @@ namespace WindowsFormsApp1
             //Fecha,Descripción,Importe,Saldo
 
 
+
+
         }
 
 
@@ -263,7 +272,7 @@ namespace WindowsFormsApp1
 
         private void btn_sumatoria_Click(object sender, EventArgs e)
         {
-            
+
 
             listaDatos = new List<Tuple<DateTime, string, double, double>>();
             CargarListaDatos();
@@ -273,8 +282,8 @@ namespace WindowsFormsApp1
 
         private void btn_carga_datagrid_Click(object sender, EventArgs e)
         {
-           
-            dataGridView1.Rows.Clear(); 
+
+            dataGridView1.Rows.Clear();
 
             listaDatos = new List<Tuple<DateTime, string, double, double>>();
             CargarListaDatos(txt_contiene.Text);
@@ -301,7 +310,7 @@ namespace WindowsFormsApp1
 
                         datos = ObtenerDatos(ruta);
                         ResetDataGrid();
-     
+
                     }
                 }
                 catch (SecurityException ex)
@@ -316,5 +325,32 @@ namespace WindowsFormsApp1
         {
 
         }
+
+        DateTime FechaInicio;
+        DateTime FechaFin;
+
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                FechaInicio = monthCalendar1.SelectionRange.Start;
+                txt_inicio.Text = FechaInicio.ToShortDateString();
+            }
+            if(radioButton2.Checked)
+            {
+                FechaFin = monthCalendar1.SelectionRange.Start;
+                txt_fin.Text = FechaFin.ToShortDateString();
+            }
+            if( txt_inicio.Text.Length > 0 && txt_fin.Text .Length > 0 && FechaInicio > FechaFin)
+            {
+                MessageBox.Show("La fecha de inicio no puede ser mayor que la fecha final");
+                FechaFin = FechaInicio;
+                txt_fin.Text = FechaFin.ToShortDateString();
+
+            }
+        }
+
+
+
     }
 }
