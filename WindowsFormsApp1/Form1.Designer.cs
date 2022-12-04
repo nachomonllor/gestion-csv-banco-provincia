@@ -40,7 +40,6 @@
             this.btn_reset_datagrid = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.btnSeleccionarArchivo = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.txt_inicio = new System.Windows.Forms.TextBox();
@@ -125,7 +124,6 @@
             this.txt_contiene.Name = "txt_contiene";
             this.txt_contiene.Size = new System.Drawing.Size(130, 20);
             this.txt_contiene.TabIndex = 3;
-            this.txt_contiene.Text = "Buscar importe";
             // 
             // btn_carga_datagrid
             // 
@@ -154,21 +152,13 @@
             // 
             // btnSeleccionarArchivo
             // 
-            this.btnSeleccionarArchivo.Location = new System.Drawing.Point(860, 519);
+            this.btnSeleccionarArchivo.Location = new System.Drawing.Point(782, 519);
             this.btnSeleccionarArchivo.Name = "btnSeleccionarArchivo";
             this.btnSeleccionarArchivo.Size = new System.Drawing.Size(164, 23);
             this.btnSeleccionarArchivo.TabIndex = 6;
             this.btnSeleccionarArchivo.Text = "Seleccionar Archivo";
             this.btnSeleccionarArchivo.UseVisualStyleBackColor = true;
             this.btnSeleccionarArchivo.Click += new System.EventHandler(this.btnSeleccionarArchivo_Click);
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(527, 480);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 7;
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // radioButton1
             // 
@@ -221,7 +211,6 @@
             this.Controls.Add(this.txt_inicio);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.btnSeleccionarArchivo);
             this.Controls.Add(this.btn_reset_datagrid);
             this.Controls.Add(this.btn_carga_datagrid);
@@ -252,7 +241,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Descripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Importe;
         private System.Windows.Forms.DataGridViewTextBoxColumn SaldoEnBanco;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.TextBox txt_inicio;

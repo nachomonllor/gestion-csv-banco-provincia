@@ -16,15 +16,20 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
 
-        //string ruta = "C:\\Users\\nacho\\OneDrive\\Desktop\\Banco provincia csv meses\\unidos.csv";
-        string ruta;
-        static List<List<string>> datos = new List<List<string>>();
-        static List<Tuple<DateTime, string, double, double>> listaDatos = new List<Tuple<DateTime, string, double, double>>();
+        private string ruta;
+        private List<List<string>> datos = new List<List<string>>();
+        private List<Tuple<DateTime, string, double, double>> listaDatos = new List<Tuple<DateTime, string, double, double>>();
+        private DateTime FechaInicio;
+        private DateTime FechaFin;
+  
+
 
         public Form1()
         {
             InitializeComponent();
 
+            FechaInicio = new DateTime (2000, 1, 1);
+            FechaFin = DateTime.Now;
 
 
             openFileDialog1 = new OpenFileDialog()
@@ -34,33 +39,19 @@ namespace WindowsFormsApp1
                 Title = "Open .csv file"
             };
 
-            //datos = ObtenerDatos(ruta);
-            //CargarListaDatos();
-            //CargarDataGridView();
-
-
-            //selectButton = new Button()
-            //{
-            //    Size = new Size(100, 20),
-            //    Location = new Point(15, 15),
-            //    Text = "Select file"
-            //};
-            //selectButton.Click += new EventHandler(selectButton_Click);
-            //Controls.Add(selectButton);
+            ResetDataGrid();
 
             txt_inicio.Enabled = false;
             txt_fin.Enabled = false;
             radioButton1.Checked = true;
             radioButton2.Checked = false;
-
-
         }
 
         public void ResetDataGrid()
         {
             dataGridView1.Rows.Clear();
             listaDatos = new List<Tuple<DateTime, string, double, double>>();
-            CargarListaDatos();
+            CargarListaDatos(txt_contiene.Text);
             CargarDataGridView();
         }
 
@@ -162,35 +153,27 @@ namespace WindowsFormsApp1
 
         }
 
-        void CargarListaDatos()
+
+        void AgregarALista(string contiene, DateTime FechaDateTime, string descripcion, double importe_double, double saldo_double)
         {
-            foreach (List<string> fila in datos)
+
+            if (FechaDateTime >= FechaInicio && FechaDateTime <= FechaFin)
             {
-                string fecha = fila[0];
-                string descripcion = fila[1];
-                string importe = fila[2].TrimStart('-');
-                string saldo = fila[3].TrimStart('-');
-
-                double importe_double = 0.0;
-                double saldo_double = 0.0;
-
-                if (importe.Length > 0  && IsNumeric(importe))
+                if (!string.IsNullOrEmpty(contiene))
                 {
-                    importe_double = double.Parse(importe);
+                    if (descripcion.Contains(contiene))
+                    {
+                        listaDatos.Add(new Tuple<DateTime, string, double, double>(FechaDateTime, descripcion, importe_double, saldo_double));
+                    }
                 }
-                if (saldo.Length > 0 && IsNumeric(saldo))
-                {
-                    saldo_double = double.Parse(saldo);
-                }
-
-                DateTime FechaDateTime = ParsearFecha(fecha);
-
-                if (fecha.Length > 0 && descripcion.Length > 0 && importe_double > 0)
+                else
                 {
                     listaDatos.Add(new Tuple<DateTime, string, double, double>(FechaDateTime, descripcion, importe_double, saldo_double));
                 }
             }
         }
+
+
 
         void CargarListaDatos(string contiene)
         {
@@ -217,20 +200,17 @@ namespace WindowsFormsApp1
 
                 if (fecha.Length > 0 && descripcion.Length > 0 && importe_double > 0)
                 {
-                    if (descripcion.Contains(contiene))
-                    {
-                        listaDatos.Add(new Tuple<DateTime, string, double, double>(FechaDateTime, descripcion, importe_double, saldo_double));
-                    }
+                    AgregarALista(contiene, FechaDateTime, descripcion, importe_double, saldo_double);
                 }
             }
         }
 
         void CargarDataGridView()
         {
-
+            MessageBox.Show("Fecha inicio: " + FechaInicio + " Fecha fin: " + FechaFin);
             foreach (Tuple<DateTime, string, double, double> tuple in listaDatos)
             {
-                dataGridView1.Rows.Add(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+                dataGridView1.Rows.Add(tuple.Item1.ToShortDateString(), tuple.Item2, tuple.Item3, tuple.Item4);
             }
         }
 
@@ -257,7 +237,7 @@ namespace WindowsFormsApp1
         {
             //Fecha,Descripción,Importe,Saldo
 
-
+            ResetDataGrid();
 
 
         }
@@ -275,25 +255,23 @@ namespace WindowsFormsApp1
 
 
             listaDatos = new List<Tuple<DateTime, string, double, double>>();
-            CargarListaDatos();
+            CargarListaDatos(txt_contiene.Text);
             BuscarImporte(txt_contiene.Text);
-
+            // CargarDataGridView();
         }
 
         private void btn_carga_datagrid_Click(object sender, EventArgs e)
         {
-
             dataGridView1.Rows.Clear();
-
             listaDatos = new List<Tuple<DateTime, string, double, double>>();
             CargarListaDatos(txt_contiene.Text);
             CargarDataGridView();
-
         }
 
         private void btn_reset_datagrid_Click(object sender, EventArgs e)
         {
             ResetDataGrid();
+
         }
 
         private void btnSeleccionarArchivo_Click(object sender, EventArgs e)
@@ -326,8 +304,7 @@ namespace WindowsFormsApp1
 
         }
 
-        DateTime FechaInicio;
-        DateTime FechaFin;
+
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
@@ -335,18 +312,19 @@ namespace WindowsFormsApp1
             {
                 FechaInicio = monthCalendar1.SelectionRange.Start;
                 txt_inicio.Text = FechaInicio.ToShortDateString();
+
             }
-            if(radioButton2.Checked)
+            if (radioButton2.Checked)
             {
                 FechaFin = monthCalendar1.SelectionRange.Start;
                 txt_fin.Text = FechaFin.ToShortDateString();
+
             }
-            if( txt_inicio.Text.Length > 0 && txt_fin.Text .Length > 0 && FechaInicio > FechaFin)
+            if (txt_inicio.Text.Length > 0 && txt_fin.Text.Length > 0 && FechaInicio > FechaFin)
             {
-                MessageBox.Show("La fecha de inicio no puede ser mayor que la fecha final");
                 FechaFin = FechaInicio;
                 txt_fin.Text = FechaFin.ToShortDateString();
-
+                MessageBox.Show("La fecha de inicio no puede ser mayor que la fecha final");
             }
         }
 
